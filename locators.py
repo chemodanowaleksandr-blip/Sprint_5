@@ -15,9 +15,9 @@ class MainPageLocators:
     ACTIVE_TAB = (By.XPATH, ".//div[contains(@class, 'tab_tab_type_current')]")
 
 class RegisterPageLocators:
-    # Поля ввода по их типам и порядку на форме с жесткими индексами
-    NAME_INPUT = (By.XPATH, "(//fieldset//input)[1]")
-    EMAIL_INPUT = (By.XPATH, "(//fieldset//input)[2]")
+    # Поля ввода ориентируются на порядковый номер блока fieldset на форме регистрации
+    NAME_INPUT = (By.XPATH, "(//form//fieldset)[1]//input")
+    EMAIL_INPUT = (By.XPATH, "(//form//fieldset)[2]//input")
     PASSWORD_INPUT = (By.XPATH, "//input[@type='password']")
     REGISTER_BUTTON = (By.XPATH, "//form//button")
     LOGIN_LINK = (By.XPATH, "//a[@href='/login']")
@@ -25,7 +25,8 @@ class RegisterPageLocators:
     PASSWORD_ERROR_MESSAGE = (By.XPATH, "//*[contains(@class, 'input__error')]")
 
 class LoginPageLocators:
-    EMAIL_INPUT = (By.XPATH, "(//fieldset//input)[1]")
+    # На форме логина всего два поля входа — берем их по порядку fieldset
+    EMAIL_INPUT = (By.XPATH, "(//form//fieldset)[1]//input")
     PASSWORD_INPUT = (By.XPATH, "//input[@type='password']")
     ENTER_BUTTON = (By.XPATH, ".//form//button")
     SUCCESS_LOGIN_MARK = (By.XPATH, ".//button[contains(@class, 'button_button_size_large')]")
@@ -34,5 +35,5 @@ class ForgotPasswordPageLocators:
     LOGIN_LINK = (By.XPATH, ".//a[@href='/login']")
 
 class ProfilePageLocators:
-    # Кнопки выхода в профиле имеют тип button и идут последней в меню
+    # Кнопка выхода в профиле
     EXIT_BUTTON = (By.XPATH, ".//button[text()='Выход']")
