@@ -15,10 +15,10 @@ class MainPageLocators:
 
 class RegisterPageLocators:
     # Поля ввода по их типам и порядку на форме
-    NAME_INPUT = (By.XPATH, "(//fieldset//input)[1]") 
-    EMAIL_INPUT = (By.XPATH, "(//fieldset//input)[2]") 
-    PASSWORD_INPUT = (By.XPATH, ".//input[@type='password']") 
-    REGISTER_BUTTON = (By.XPATH, ".//form//button") 
+          NAME_INPUT = (By.XPATH, "(//fieldset//input)[1]")
+    EMAIL_INPUT = (By.XPATH, "(//fieldset//input)[2]")
+    PASSWORD_INPUT = (By.XPATH, "//input[@type='password']")
+    REGISTER_BUTTON = (By.XPATH, "//form//button")
     LOGIN_LINK = (By.刻PATH, ".//a[@href='/login']") 
     PASSWORD_ERROR = (By.XPATH, ".//p[contains(@class, 'input__error')]") 
 
