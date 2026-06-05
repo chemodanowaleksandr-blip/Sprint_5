@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, LoginPageLocators, ProfilePageLocators
-from helpers import TestData  # Изменено тут: импортируем данные
+from helpers import TestData
 
 
 class TestConstructorAndProfile:
@@ -10,10 +10,10 @@ class TestConstructorAndProfile:
 
     def login_helper(self, driver):
         """Вспомогательный метод для авторизации перед тестами профиля"""
-        driver.get(f"https://{TestData.BASE_HOST}/login")  # Изменено тут
+        driver.get(f"https://{TestData.BASE_HOST}/login")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.EMAIL_INPUT))
-        driver.find_element(*LoginPageLocators.EMAIL_INPUT).send_keys(TestData.EMAIL)  # Изменено тут
-        driver.find_element(*LoginPageLocators.PASSWORD_INPUT).send_keys(TestData.PASSWORD)  # Изменено тут
+        driver.find_element(*LoginPageLocators.EMAIL_INPUT).send_keys(TestData.EMAIL)
+        driver.find_element(*LoginPageLocators.PASSWORD_INPUT).send_keys(TestData.PASSWORD)
         driver.find_element(*LoginPageLocators.ENTER_BUTTON).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.SUCCESS_LOGIN_MARK))
 
@@ -24,7 +24,6 @@ class TestConstructorAndProfile:
         cabinet_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(MainPageLocators.PERSONAL_CABINET_BUTTON))
         driver.execute_script("arguments[0].click();", cabinet_btn)
         
-        # Ожидаем появление кнопки Выход
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(ProfilePageLocators.EXIT_BUTTON))
         assert "account" in driver.current_url
 
@@ -37,7 +36,6 @@ class TestConstructorAndProfile:
         
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(ProfilePageLocators.EXIT_BUTTON))
         
-        # Возвращаемся в Конструктор
         driver.find_element(*MainPageLocators.CONSTRUCTOR_BUTTON).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.SUCCESS_LOGIN_MARK))
         assert "account" not in driver.current_url
@@ -51,7 +49,6 @@ class TestConstructorAndProfile:
         
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(ProfilePageLocators.EXIT_BUTTON))
         
-        # Кликаем на логотип
         driver.find_element(*MainPageLocators.LOGO_BUTTON).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.SUCCESS_LOGIN_MARK))
         assert "account" not in driver.current_url
@@ -65,7 +62,6 @@ class TestConstructorAndProfile:
         
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(ProfilePageLocators.EXIT_BUTTON))
         
-        # Прожимаем Выход
         driver.find_element(*ProfilePageLocators.EXIT_BUTTON).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.ENTER_BUTTON))
         assert "login" in driver.current_url
@@ -75,7 +71,10 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        driver.find_element(*MainPageLocators.SAUCES_TAB).click()
+        # Заменили на JS-клик для стабильности
+        tab_element = driver.find_element(*MainPageLocators.SAUCES_TAB)
+        driver.execute_script("arguments[0].click();", tab_element)
+        
         assert WebDriverWait(driver, 5).until(
             EC.text_to_be_present_in_element_attribute(MainPageLocators.SAUCES_TAB, "class", "tab_tab_type_current")
         )
@@ -85,7 +84,10 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        driver.find_element(*MainPageLocators.FILLINGS_TAB).click()
+        # Заменили на JS-клик для стабильности
+        tab_element = driver.find_element(*MainPageLocators.FILLINGS_TAB)
+        driver.execute_script("arguments[0].click();", tab_element)
+        
         assert WebDriverWait(driver, 5).until(
             EC.text_to_be_present_in_element_attribute(MainPageLocators.FILLINGS_TAB, "class", "tab_tab_type_current")
         )
@@ -95,12 +97,14 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        # Сначала кликаем на соусы, чтобы сбросить фокус с булок
-        driver.find_element(*MainPageLocators.SAUCES_TAB).click()
+        # Сбрасываем фокус на соусы через JS-клик
+        sauce_element = driver.find_element(*MainPageLocators.SAUCES_TAB)
+        driver.execute_script("arguments[0].click();", sauce_element)
         
-        driver.find_element(*MainPageLocators.BUNS_TAB).click()
+        # Переключаемся обратно на булки через JS-клик
+        bun_element = driver.find_element(*MainPageLocators.BUNS_TAB)
+        driver.execute_script("arguments[0].click();", bun_element)
+        
         assert WebDriverWait(driver, 5).until(
             EC.text_to_be_present_in_element_attribute(MainPageLocators.BUNS_TAB, "class", "tab_tab_type_current")
         )
-
-       
