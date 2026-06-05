@@ -1,16 +1,24 @@
-import random  
-def generate_random_email(cohort_number="cohort_31"):  
-    random_digits = random.randint(100, 999)  
-    return f"alexandr_chernov_{cohort_number}_{random_digits}@yandex.ru"  
-def generate_random_password(length=6):  
-    chars = "abcdefghijklmnopqrstuvwxyzXYZ1234567890"  
-    return "".join(random.sample(chars, length)) 
-    
+import random
+import string
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from locators import LoginPageLocators
+from data import Urls, TestData
 
-class TestData:
-    BASE_HOST = "stellarburgers.education-services.ru"
-    EMAIL = "alexandr_test_burgers@yandex.ru"
-    PASSWORD = "password123"
+def generate_random_email():
+    """Генерация случайного email для тестов регистрации"""
+    random_string = ''.join(random.choices(string.ascii_lowercase, k=7))
+    return f"alexandr_{random_string}@yandex.ru"
 
-    
+def generate_random_password(length=6):
+    """Генерация случайного пароля заданной длины"""
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
+def login_user(driver):
+    """Общий хелпер для авторизации, вынесенный из файлов тестов по требованию ревьюера"""
+    driver.get(Urls.LOGIN_URL)
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.EMAIL_INPUT))
+    driver.find_element(*LoginPageLocators.EMAIL_INPUT).send_keys(TestData.EMAIL)
+    driver.find_element(*LoginPageLocators.PASSWORD_INPUT).send_keys(TestData.PASSWORD)
+    driver.find_element(*LoginPageLocators.ENTER_BUTTON).click()
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.SUCCESS_LOGIN_MARK))
