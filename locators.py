@@ -5,25 +5,28 @@ class MainPageLocators:
     LOGIN_ACCOUNT_BUTTON = (By.XPATH, ".//button[contains(@class, 'button_button')]")
     PERSONAL_CABINET_BUTTON = (By.XPATH, ".//a[@href='/account']")
     CONSTRUCTOR_BUTTON = (By.XPATH, ".//a[@href='/']|.//p[contains(@class, 'header_link')]")
-    LOGO_BUTTON = (By.XPATH, ".//header/a[@href='/']")
+    # Исправленный локатор логотипа: ищет элемент по двум путям для надежности
+    LOGO_BUTTON = (By.XPATH, "//*[contains(@class, 'logo')]/a|.//header//a[@href='/']")
 
     # Разделы конструктора (идем по порядку вкладок)
-    BUNS_TAB = (By.XPATH, "(//div[contains(@class, 'tab_tab')])[1]")
-    SAUCES_TAB = (By.XPATH, "(//div[contains(@class, 'tab_tab')])[2]")
-    FILLINGS_TAB = (By.XPATH, "(//div[contains(@class, 'tab_tab')])[3]")
+    BUNS_TAB = (By.XPATH, "(//div[contains(@class, 'tab_tab')])")
+    SAUCES_TAB = (By.XPATH, "(//div[contains(@class, 'tab_tab')])")
+    FILLINGS_TAB = (By.XPATH, "(//div[contains(@class, 'tab_tab')])")
     ACTIVE_TAB = (By.XPATH, ".//div[contains(@class, 'tab_tab_type_current')]")
 
 class RegisterPageLocators:
-    # Поля ввода по их типам и порядку на форме
+    # Поля ввода по их типам и порядку на форме с жесткими индексами
     NAME_INPUT = (By.XPATH, "(//fieldset//input)")
     EMAIL_INPUT = (By.XPATH, "(//fieldset//input)")
     PASSWORD_INPUT = (By.XPATH, "//input[@type='password']")
     REGISTER_BUTTON = (By.XPATH, "//form//button")
     LOGIN_LINK = (By.XPATH, "//a[@href='/login']")
     PASSWORD_ERROR = (By.XPATH, "//*[contains(@class, 'input__error')]")
+    # Добавили имя переменной, которое ищет тест регистрации
+    PASSWORD_ERROR_MESSAGE = (By.XPATH, "//*[contains(@class, 'input__error')]")
 
 class LoginPageLocators:
-    EMAIL_INPUT = (By.XPATH, "(//fieldset//input)[1]")
+    EMAIL_INPUT = (By.XPATH, "(//fieldset//input)")
     PASSWORD_INPUT = (By.XPATH, "//input[@type='password']")
     ENTER_BUTTON = (By.XPATH, ".//form//button")
     SUCCESS_LOGIN_MARK = (By.XPATH, ".//button[contains(@class, 'button_button_size_large')]")
