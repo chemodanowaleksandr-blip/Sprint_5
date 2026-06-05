@@ -4,11 +4,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, LoginPageLocators, RegisterPageLocators, ForgotPasswordPageLocators
 from helpers import TestData
 
-# Актуальный домен стенда
-
 
 class TestLogin:
-    # Учетные данные для входа (мы берем постоянные, чтобы не регистрировать каждый раз заново)
 
     def login_helper(self, driver):
         """Вспомогательный метод для заполнения полей входа и нажатия кнопки Войти"""
@@ -20,8 +17,7 @@ class TestLogin:
         # Ждем, пока на главной появится кнопка "Оформить заказ", подтверждающая успешный логин
         WebDriverWait(driver, 5).until(EC.visibility_of_element_located(LoginPageLocators.SUCCESS_LOGIN_MARK))
 
-
-        def test_login_from_main_page_button(self, driver):
+    def test_login_from_main_page_button(self, driver):
         """1. Вход по кнопке 'Войти в аккаунт' на главной"""
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
