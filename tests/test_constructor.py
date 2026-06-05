@@ -2,22 +2,22 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import MainPageLocators, LoginPageLocators, ProfilePageLocators
-from helpers import TestDat
+from helpers import TestData  # Изменено тут: импортируем данные
 
-# Актуальный домен стенда
-        
+
 class TestConstructorAndProfile:
     # Зарегистрированный на стенде постоянный аккаунт
-    
+
     def login_helper(self, driver):
         """Вспомогательный метод для авторизации перед тестами профиля"""
-        driver.get(f"https://{TestData.BASE_HOST}/login")
+        driver.get(f"https://{TestData.BASE_HOST}/login")  # Изменено тут
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.EMAIL_INPUT))
-        driver.find_element(*LoginPageLocators.EMAIL_INPUT).send_keys(TestData.EMAIL)
-        driver.find_element(*LoginPageLocators.PASSWORD_INPUT).send_keys(TestData.PASSWORD)
+        driver.find_element(*LoginPageLocators.EMAIL_INPUT).send_keys(TestData.EMAIL)  # Изменено тут
+        driver.find_element(*LoginPageLocators.PASSWORD_INPUT).send_keys(TestData.PASSWORD)  # Изменено тут
         driver.find_element(*LoginPageLocators.ENTER_BUTTON).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.SUCCESS_LOGIN_MARK))
 
+    def test_go_to_personal_cabinet(self, driver):
         """1. Проверка перехода в личный кабинет"""
         self.login_helper(driver)
         
@@ -47,7 +47,6 @@ class TestConstructorAndProfile:
         self.login_helper(driver)
         
         cabinet_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(MainPageLocators.PERSONAL_CABINET_BUTTON))
-        # ИСПРАВЛЕНО: Добавлен индекс [0] для корректного JavaScript-клика
         driver.execute_script("arguments[0].click();", cabinet_btn)
         
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(ProfilePageLocators.EXIT_BUTTON))
@@ -71,7 +70,7 @@ class TestConstructorAndProfile:
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(LoginPageLocators.ENTER_BUTTON))
         assert "login" in driver.current_url
 
-        def test_constructor_tabs_sauces(self, driver):
+    def test_constructor_tabs_sauces(self, driver):
         """5.1 Проверка перехода на вкладку 'Соусы'"""
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
@@ -96,7 +95,7 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        # Сначала кликаем на соусы, чтобы сбросить фокус с булок, так как булки активны по умолчанию
+        # Сначала кликаем на соусы, чтобы сбросить фокус с булок
         driver.find_element(*MainPageLocators.SAUCES_TAB).click()
         
         driver.find_element(*MainPageLocators.BUNS_TAB).click()
@@ -104,4 +103,4 @@ class TestConstructorAndProfile:
             EC.text_to_be_present_in_element_attribute(MainPageLocators.BUNS_TAB, "class", "tab_tab_type_current")
         )
 
-        
+       
