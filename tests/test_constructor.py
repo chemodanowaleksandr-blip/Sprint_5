@@ -71,7 +71,6 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        # Заменили на JS-клик для стабильности
         tab_element = driver.find_element(*MainPageLocators.SAUCES_TAB)
         driver.execute_script("arguments[0].click();", tab_element)
         
@@ -84,7 +83,6 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        # Заменили на JS-клик для стабильности
         tab_element = driver.find_element(*MainPageLocators.FILLINGS_TAB)
         driver.execute_script("arguments[0].click();", tab_element)
         
@@ -97,11 +95,9 @@ class TestConstructorAndProfile:
         driver.get(f"https://{TestData.BASE_HOST}/")
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(MainPageLocators.LOGIN_ACCOUNT_BUTTON))
         
-        # Сбрасываем фокус на соусы через JS-клик
         sauce_element = driver.find_element(*MainPageLocators.SAUCES_TAB)
         driver.execute_script("arguments[0].click();", sauce_element)
         
-        # Переключаемся обратно на булки через JS-клик
         bun_element = driver.find_element(*MainPageLocators.BUNS_TAB)
         driver.execute_script("arguments[0].click();", bun_element)
         
