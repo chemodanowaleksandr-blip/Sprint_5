@@ -4,4 +4,13 @@ def generate_random_email(cohort_number="cohort_31"):
     return f"alexandr_chernov_{cohort_number}_{random_digits}@yandex.ru"  
 def generate_random_password(length=6):  
     chars = "abcdefghijklmnopqrstuvwxyzXYZ1234567890"  
-    return "".join(random.sample(chars, length))  
+    return "".join(random.sample(chars, length)) 
+    
+
+class TestData:
+    BASE_HOST = "stellarburgers.education-services.ru"
+    EMAIL = "alexandr_test_burgers@yandex.ru"
+    PASSWORD = "password123"
+
+    
+
